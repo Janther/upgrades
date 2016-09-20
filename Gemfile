@@ -1,68 +1,76 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
-Encoding.default_external = Encoding::UTF_8
-Encoding.default_internal = Encoding::UTF_8
-
-gem 'rails', '~> 4.1'
-gem 'pg', '~> 0.17'
-gem 'devise'
-gem 'paperclip', '~> 4.2'
+# Backend
+gem 'rails', '~> 3.2.21'
+gem 'mysql2', '~> 0.3.10'
+gem 'devise', '3.0.1'
 gem 'ckeditor'
-gem 'friendly_id', '~> 5.0.0'
-gem 'will_paginate', '~> 3.0'
-gem 'ancestry'
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'nokogiri'
-gem 'airbrake'
-gem 'nested_form', '0.3.1'
-gem 'spreadsheet', '0.6.5.3' # why? and why this old version?
-gem 'rack', '1.5.2'
-gem 'hpricot', '~> 0.8.4'
-gem 'recaptcha', '0.3.4', :require => 'recaptcha/rails'
-gem 'cancancan'
-gem 'draper'
-gem 'sass-rails', '~> 5.0.0'
-gem 'font-awesome-sass'
-gem 'compass-rails', '~> 2.0.4'
-gem 'susy'
-gem 'pg_search'
-gem 'sitemap_generator'
-gem 'whenever'
-gem 'httparty'
-gem 'uglifier'
+gem 'carrierwave'
+gem 'mini_magick', '3.6.0'
+gem 'will_paginate', '3.0.5'
+gem 'has_publishing'
+gem 'dynamic_form'
+gem 'nested_form'
+gem 'strong_parameters'
+gem 'ransack'
+gem 'dalli'
+gem 'delayed_job_active_record'
+gem 'daemons'
+gem 'rubyzip'
 
-# Use unicorn for serving the app on AWS
-group :staging, :staging_published, :production, :production_published do
-  gem 'unicorn'
+# Frontend
+gem 'jquery-rails'
+gem 'chosen-rails'
+gem 'kaminari'
+gem 'bootstrap-kaminari-views'
+
+# We have to use the git version of Prawn because they are useless at
+# actually releasing gem versions consistently.
+# The reason we need such a bleeding-edge version of Prawn is for
+# colspan and rowspan support.
+# FIXME: Use gem version of Prawn once once gets released with
+# colspan support.
+gem 'prawn', :git => 'https://github.com/prawnpdf/prawn.git', :ref => '2d40e4d73270a1e6a2a294aec12f5705a52969e6'
+
+#Analytics
+gem 'google-analytics-rails'
+gem 'twitter-bootstrap-rails'
+gem 'bootstrap-datepicker-rails'
+
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
+  gem 'less-rails'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  gem 'therubyracer', '0.12.0', :platforms => :ruby
+
+  gem 'uglifier', '>= 1.0.3'
 end
 
-group :development, :development_published, :test do
-  gem 'shoulda-matchers'
-  gem 'rake'
+group :development, :test do
   gem 'thin'
-  gem 'cucumber-rails', :require => false
-  gem 'database_cleaner' # database_cleaner is not required, but highly recommended
+  gem 'shoulda'
   gem 'rspec-rails'
-  gem 'rspec-its'
-  gem 'rspec-activemodel-mocks'
-  gem 'rspec-collection_matchers'
-  gem 'spork'
-  gem 'launchy'    # So you can do Then show me the page
-  gem 'autotest-rails'
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'ZenTest'
-  gem 'escape_utils' # Fixes Rack issue when UTF-8 strings are sent in the params
-  gem 'columnize'
-  gem 'pry-rails'
-  # gem 'pry-byebug'
-  # gem 'byebug'
+  gem 'capistrano'
+  gem 'rvm-capistrano', require: false
+  gem 'capistrano-ext'
+  gem 'rb-fsevent'
+  gem 'pry'
 end
 
-group :development, :development_published do
-  gem 'wirble'
-  gem 'hirb'
-  gem 'rails3-generators'
-  gem 'railroady'
+group :test do
+  gem 'database_cleaner'
+  gem 'guard-bundler'
+	gem 'capybara'
+  gem 'poltergeist'
+  gem 'spork-rails'
+  gem 'guard-spork'
+  gem 'guard-rspec'
+  gem 'launchy'
+  gem 'simplecov'
 end
