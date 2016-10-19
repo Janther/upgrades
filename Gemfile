@@ -2,15 +2,15 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 4.2.7.1'
 
+# Added following http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#responders
+gem 'responders', '~> 2.0'
+
 # Use postgresql as the database for Active Record
 gem 'pg'
 
 # Use resque for managing Resque queues
 # TODO: migrater to ActiveJob pattern after upgrading to Rails 4.2
 gem 'resque'
-
-# Use resquemailer for queueing emails
-gem 'resque_mailer'
 
 # Use resque-scheduler to schedule tasks
 gem 'resque-scheduler'
@@ -28,7 +28,7 @@ gem 'airbrake'
 gem 'dotenv-rails'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '5.0.4'
+gem 'sass-rails', '~> 5.0.4'
 
 # Use bootstrap for admin styles
 gem 'bootstrap-sass'
@@ -86,7 +86,7 @@ gem 'cancan', :git => 'https://github.com/3months/cancan', :branch => 'strong_pa
 gem 'friendly_id', :git => 'https://github.com/FriendlyId/friendly_id.git'
 
 # Tagging
-gem 'acts-as-taggable-on', '~> 3.0.2'
+gem 'acts-as-taggable-on'
 
 # Markdown parsing
 gem 'redcarpet', '~> 3.3.2'
@@ -94,10 +94,7 @@ gem 'redcarpet', '~> 3.3.2'
 # HTML to markdown for exporting product xml
 gem 'reverse_markdown'
 
-# TODO revert back to gem version once stable release for Rails 4 is released
-# TODO currently waiting to hear about fix to papertrail to work with
-## acts-as-taggable-on: https://github.com/airblade/paper_trail/pull/236
-gem 'paper_trail', :git => 'https://github.com/3months/paper_trail.git', :branch => 'rails4' # Use PaperTrail for audit log + snapshots
+gem 'paper_trail', '~> 4.2.0'
 
 # Use Kaminari for pagination
 gem 'kaminari'
@@ -165,6 +162,8 @@ gem 'whenever', require: false
 
 gem 'newrelic_rpm'
 
+gem 'rb-readline'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -176,9 +175,12 @@ group :production, :production_published, :staging, :staging_published do
 end
 
 group :development, :development_published, :test, :test_published do
-
   # RSpec makes testing nicer
-  gem 'rspec-rails', '~> 2.14.2'
+  gem 'rspec-rails'
+  gem 'rspec-its'
+  gem 'rspec-collection_matchers'
+  gem 'railties', '4.2.7.1'
+  gem 'test-unit'
 
   # Factories make tests simpler
   gem 'factory_girl_rails'
@@ -190,13 +192,17 @@ group :development, :development_published, :test, :test_published do
   gem "capistrano-resque"
 
   # Use livereload to help with front end development speed
-  gem 'guard-livereload',        :require => false
+  gem 'guard-livereload', require: false
   gem 'rack-livereload'
 
-  gem 'guard-rspec',        :require => false
+  gem 'guard-rspec', require: false
 
   # Use smacssify to quickly setup a SCSS folder structure
   gem 'smacssify'
+  # gem 'debugger'
+  # gem 'byebug'
+  gem 'pry'
+  # gem 'pry-byebug'
 end
 
 group :test, :test_published do
@@ -213,8 +219,8 @@ group :test, :test_published do
   gem 'database_cleaner'
 
   # Easily asset model behaviours
-  gem 'shoulda', :require => false
-  gem 'shoulda-matchers', :require => false
+  gem 'shoulda', require: false
+  gem 'shoulda-matchers', require: false
 
   # Save and open pages to debug tests
   gem 'launchy'
@@ -224,11 +230,11 @@ group :test, :test_published do
 
   # Leverage webmock to store and replay HTTP requests
   gem 'vcr'
-
 end
 
-# gem 'debugger', group: [:development, :test, :development_published, :test_published]
-# gem 'byebug', group: [:development, :test, :development_published, :test_published]
-gem 'pry', group: [:development, :test, :development_published, :test_published]
-# gem 'certified', group: [:development, :development_published]
-# gem 'pry-byebug', group: [:development, :test, :development_published, :test_published]
+group :development, :development_published do
+  # clean routes
+  gem 'traceroute'
+  # Added following http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#web-console
+  gem 'web-console', '~> 2.0'
+end
