@@ -2,15 +2,15 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 4.2.7.1'
 
-# Added following http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#responders
-gem 'responders', '~> 2.0'
-
 # Use postgresql as the database for Active Record
 gem 'pg'
 
 # Use resque for managing Resque queues
 # TODO: migrater to ActiveJob pattern after upgrading to Rails 4.2
 gem 'resque'
+
+# Use resquemailer for queueing emails
+gem 'resque_mailer'
 
 # Use resque-scheduler to schedule tasks
 gem 'resque-scheduler'
@@ -28,7 +28,7 @@ gem 'airbrake'
 gem 'dotenv-rails'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0.4'
+gem 'sass-rails', '5.0.4'
 
 # Use bootstrap for admin styles
 gem 'bootstrap-sass'
@@ -40,7 +40,7 @@ gem 'font-awesome-sass-rails'
 # TODO: There's a bug inside the foundation form.js
 # it's simple enough that it should get merged but we are depending
 # on a fork for now.
-gem 'zurb-foundation', github: "3months/foundation", ref: '892a9f'
+gem 'zurb-foundation', git: "git@github.com:3months/foundation.git"
 
 # Use select2 for a better multiselect interface
 gem 'select2-rails'
@@ -52,10 +52,10 @@ gem 'jquery-ui-rails', '~> 5.0.5'
 gem "bootstrap-sass-extras", "0.0.6" # Bootstrap SASS extras includes some helpers and generators to speed up templating
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier'
+gem 'uglifier', '~> 2.7'
 
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails'
+gem 'coffee-rails', '~> 4.1.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
@@ -80,13 +80,13 @@ gem 'jbuilder', '~> 2'
 gem 'devise', '~> 3.5.4'
 
 # Authorization with cancan
-gem 'cancan', github: '3months/cancan', branch: 'strong_parameters', ref: 'b9aa14'
+gem 'cancan', :git => 'https://github.com/3months/cancan', :branch => 'strong_parameters'
 
 # Use FriendlyId for generating slugs
-gem 'friendly_id', github: 'FriendlyId/friendly_id', ref: 'a25368'
+gem 'friendly_id', :git => 'https://github.com/FriendlyId/friendly_id.git'
 
 # Tagging
-gem 'acts-as-taggable-on'
+gem 'acts-as-taggable-on', '~> 3.0.2'
 
 # Markdown parsing
 gem 'redcarpet', '~> 3.3.2'
@@ -94,13 +94,16 @@ gem 'redcarpet', '~> 3.3.2'
 # HTML to markdown for exporting product xml
 gem 'reverse_markdown'
 
-gem 'paper_trail', '~> 4.2.0'
+# TODO revert back to gem version once stable release for Rails 4 is released
+# TODO currently waiting to hear about fix to papertrail to work with
+## acts-as-taggable-on: https://github.com/airblade/paper_trail/pull/236
+gem 'paper_trail', :git => 'https://github.com/3months/paper_trail.git', :branch => 'rails4' # Use PaperTrail for audit log + snapshots
 
 # Use Kaminari for pagination
 gem 'kaminari'
 
 # Upload assets to s3
-gem 'fog'
+gem 'fog', '~> 1.32.0'
 # Assets en S3
 gem 'asset_sync'
 
@@ -175,12 +178,9 @@ group :production, :production_published, :staging, :staging_published do
 end
 
 group :development, :development_published, :test, :test_published do
+
   # RSpec makes testing nicer
-  gem 'rspec-rails'
-  gem 'rspec-its'
-  gem 'rspec-collection_matchers'
-  gem 'railties', '4.2.7.1'
-  gem 'test-unit'
+  gem 'rspec-rails', '~> 2.14.2'
 
   # Factories make tests simpler
   gem 'factory_girl_rails'
@@ -192,17 +192,13 @@ group :development, :development_published, :test, :test_published do
   gem "capistrano-resque"
 
   # Use livereload to help with front end development speed
-  gem 'guard-livereload', require: false
+  gem 'guard-livereload',        :require => false
   gem 'rack-livereload'
 
-  gem 'guard-rspec', require: false
+  gem 'guard-rspec',        :require => false
 
   # Use smacssify to quickly setup a SCSS folder structure
   gem 'smacssify'
-  # gem 'debugger'
-  # gem 'byebug'
-  gem 'pry'
-  # gem 'pry-byebug'
 end
 
 group :test, :test_published do
@@ -219,8 +215,8 @@ group :test, :test_published do
   gem 'database_cleaner'
 
   # Easily asset model behaviours
-  gem 'shoulda', require: false
-  gem 'shoulda-matchers', require: false
+  gem 'shoulda', :require => false
+  gem 'shoulda-matchers', :require => false
 
   # Save and open pages to debug tests
   gem 'launchy'
@@ -232,9 +228,8 @@ group :test, :test_published do
   gem 'vcr'
 end
 
-group :development, :development_published do
-  # clean routes
-  gem 'traceroute'
-  # Added following http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#web-console
-  gem 'web-console', '~> 2.0'
-end
+# gem 'debugger', group: [:development, :test, :development_published, :test_published]
+# gem 'byebug', group: [:development, :test, :development_published, :test_published]
+gem 'pry', group: [:development, :test, :development_published, :test_published]
+# gem 'certified', group: [:development, :development_published]
+# gem 'pry-byebug', group: [:development, :test, :development_published, :test_published]
