@@ -40,7 +40,7 @@ gem 'font-awesome-sass-rails'
 # TODO: There's a bug inside the foundation form.js
 # it's simple enough that it should get merged but we are depending
 # on a fork for now.
-gem 'zurb-foundation', git: "git@github.com:3months/foundation.git"
+gem 'zurb-foundation', github: "3months/foundation", ref: '892a9f'
 
 # Use select2 for a better multiselect interface
 gem 'select2-rails'
@@ -52,10 +52,10 @@ gem 'jquery-ui-rails', '~> 5.0.5'
 gem "bootstrap-sass-extras", "0.0.6" # Bootstrap SASS extras includes some helpers and generators to speed up templating
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '~> 2.7'
+gem 'uglifier'
 
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
@@ -80,10 +80,10 @@ gem 'jbuilder', '~> 2'
 gem 'devise', '~> 3.5.4'
 
 # Authorization with cancan
-gem 'cancan', :git => 'https://github.com/3months/cancan', :branch => 'strong_parameters'
+gem 'cancan', github: '3months/cancan', branch: 'strong_parameters', ref: 'b9aa14'
 
 # Use FriendlyId for generating slugs
-gem 'friendly_id', :git => 'https://github.com/FriendlyId/friendly_id.git'
+gem 'friendly_id', github: 'FriendlyId/friendly_id', ref: 'a25368'
 
 # Tagging
 gem 'acts-as-taggable-on'
@@ -100,7 +100,7 @@ gem 'paper_trail', '~> 4.2.0'
 gem 'kaminari'
 
 # Upload assets to s3
-gem 'fog', '~> 1.32.0'
+gem 'fog'
 # Assets en S3
 gem 'asset_sync'
 
